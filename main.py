@@ -10,7 +10,7 @@ def hello_world():
     return "Hello {}!".format(name)
 
 
-@app.route("/<name>")
+@app.route("param/<name>")
 def hello(name):
     return f"Hello, {escape(name)}!"
 
