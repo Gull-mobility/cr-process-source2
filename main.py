@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 
 @app.route("/<name>")
-def hello(name):
+def param(name):
     execution(name)
     return f"Hello, {escape(name)}!"
 
