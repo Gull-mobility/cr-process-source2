@@ -4,13 +4,8 @@ from markupsafe import escape
 
 app = Flask(__name__)
 
-@app.route("/")
-def hello_world():
-    name = os.environ.get("NAME", "World")
-    return "Hello {}!".format(name)
 
-
-@app.route("/param/<name>")
+@app.route("/<name>")
 def hello(name):
     return f"Hello, {escape(name)}!"
 
