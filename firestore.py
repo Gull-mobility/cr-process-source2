@@ -37,7 +37,7 @@ def firestore_write_changes(changes):
         batch = db_firestore.batch()
         for vehicle_item in items:
             #print(list_to_batch[vehicle_item])
-            fst_ref = db_firestore.collection(firestore_actual_info).document(vehicles_list[vehicle_item]['matricula'])
+            fst_ref = db_firestore.collection(firestore_actual_collection).document(changes[vehicle_item]['matricula'])
             batch.set(fst_ref, changes[vehicle_item])
         # Finally commit the batch
         batch.commit()
