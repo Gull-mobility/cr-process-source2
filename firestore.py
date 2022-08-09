@@ -32,6 +32,8 @@ def firestore_write_changes(changes):
             list_to_batch.append(in_list.copy())
             in_list = []
         in_list.append(item)
+    #Last group also insert
+    list_to_batch.append(in_list.copy())
 
     for items in list_to_batch:
         batch = db_firestore.batch()
