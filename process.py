@@ -13,5 +13,7 @@ def execution(uoid):
     #Calculate movements
     changes = calculate_movements(new_locations, old_location)
 
+    print(str(len(changes)) + ' vehicles with changes')
+
     #Write in firestore the changes
     firestore_write_changes(changes)
