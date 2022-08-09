@@ -10,6 +10,11 @@ app = Flask(__name__)
 
 @app.route("/<name>")
 def hello(name):
+    execution(name)
+    return f"Hello, {escape(name)}!"
+
+@app.route("/hello/<name>")
+def hello(name):
     execution(escape(name))
     return f"Hello, {escape(name)}!"
 
