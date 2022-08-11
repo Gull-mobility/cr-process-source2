@@ -14,7 +14,7 @@ def execution(uoid):
     location_with_changes, movements, counter_new, counter_change = calculate_movements(new_locations, old_location)
 
     #Locantions can be bigger than movements because a new vehicle is not a movements
-    print('New vehicles: ' + str(counter_new) + '. Changes: ' + counter_change)
+    print('New vehicles: ' + str(counter_new) + '. Changes: ' + str(counter_change))
     print(str(len(location_with_changes)) + ' firestore changes, '  + str(len(movements)) + ' movements')
 
     #Save movements in bigquery
