@@ -2,6 +2,9 @@ import os
 from flask import Flask
 from markupsafe import escape
 
+#Import to show date
+from datetime import datetime
+
 #Import all process
 from process import execution
 
@@ -10,8 +13,14 @@ app = Flask(__name__)
 
 @app.route("/<name>")
 def param(name):
+
+    #Execute process
     execution(name)
-    return f"Hello, {escape(name)}!"
+
+    #Print time
+    date = datetime.now()
+    
+    return f"Tadk donde for id, {escape(name)} at {date}!"
 
 @app.route("/hello/<name>")
 def hello(name):
