@@ -3,6 +3,8 @@ def calculate_movements(new_locations,old_locations):
 
     location_with_changes = {}
     movements = []
+    counter_new = 0
+    counter_change = 0
 
     #Para todas las nuevas posiciones comparamos con posicion anterior
     for plate in new_locations:
@@ -20,6 +22,8 @@ def calculate_movements(new_locations,old_locations):
 
             #Si es nueva la anadimos a firestore
             location_with_changes[plate] = new_locations[plate]
+            #Add one to new counter
+            counter_new = counter_new + 1
         else:
 
             new_latitude = new_locations[plate]['latitud']
@@ -44,7 +48,10 @@ def calculate_movements(new_locations,old_locations):
                 #Save the change in firestore
                 location_with_changes[plate] = new_locations[plate]
 
-    return location_with_changes, movements
+                #Add one to change counter
+                counter_change = counter_change + 1
+
+    return location_with_changes, movements, counter_new, counter_change
 
 #Build object to save in table 
 def prepare_movement_object(new_location, old_location):

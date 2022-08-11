@@ -11,9 +11,10 @@ def execution(uoid):
     #Get new positions
     new_locations = bigquery_positions_by_id(uoid)
     #Calculate movements
-    location_with_changes, movements = calculate_movements(new_locations, old_location)
+    location_with_changes, movements, counter_new, counter_change = calculate_movements(new_locations, old_location)
 
     #Locantions can be bigger than movements because a new vehicle is not a movements
+    print('New vehicles: ' + str(counter_new) + '. Changes: ' + counter_change)
     print(str(len(location_with_changes)) + ' firestore changes, '  + str(len(movements)) + ' movements')
 
     #Save movements in bigquery
