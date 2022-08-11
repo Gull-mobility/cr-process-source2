@@ -13,7 +13,8 @@ def execution(uoid):
     #Calculate movements
     location_with_changes, movements = calculate_movements(new_locations, old_location)
 
-    print(str(len(location_with_changes)) + ' vehicles with changes')
+    #Locantions can be bigger than movements because a new vehicle is not a movements
+    print(str(len(location_with_changes)) + ' firestore changes, '  + str(len(movements)) + ' movements')
 
     #Save movements in bigquery
     bigquery_save_movements(movements)
