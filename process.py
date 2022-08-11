@@ -17,7 +17,8 @@ def execution(uoid):
     print(str(len(location_with_changes)) + ' firestore changes, '  + str(len(movements)) + ' movements')
 
     #Save movements in bigquery
-    bigquery_save_movements(movements)
+    if movements:
+        bigquery_save_movements(movements)
 
     #Write in firestore the changes
     firestore_write_changes(location_with_changes)
