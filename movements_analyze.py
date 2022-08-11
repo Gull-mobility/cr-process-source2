@@ -1,7 +1,8 @@
 def calculate_movements(new_locations,old_locations):
     in_debug = False
 
-    changes = {}
+    location_with_changes = {}
+    movements = []
 
     #Para todas las nuevas posiciones comparamos con posicion anterior
     for plate in new_locations:
@@ -18,7 +19,7 @@ def calculate_movements(new_locations,old_locations):
             #If this vehicule do not exist not continue
 
             #Si es nueva la anadimos a firestore
-            changes[plate] = new_locations[plate]
+            location_with_changes[plate] = new_locations[plate]
         else:
 
             new_latitude = new_locations[plate]['latitud']
@@ -27,15 +28,65 @@ def calculate_movements(new_locations,old_locations):
             new_longitude = new_locations[plate]['longitud']
             old_longitude = old_locations[plate]['longitud']
 
+
             if(new_latitude == old_latitude and new_longitude == old_longitude):
                 print('[check_movements] Son iguales') if in_debug else ''
             else:
                 print('[check_movements] Son distintas') if in_debug else ''
                 print(new_latitude, old_latitude, new_longitude, old_longitude) if in_debug else ''
 
-                #Si son distintas hay que enviar a bigquery - TODO
-                
-                #Solo guardamos el cambio
-                changes[plate] = new_locations[plate]
+                #TODO: Add more conditions like minimum movement or charge
+                #TODO: Add a validation if the charge level increease
 
-    return changes
+                #Prepare object of movements and add to list
+                movements.append(prepare_movement_object(new_locations[plate], old_locations[plate]))
+                
+                #Save the change in firestore
+                location_with_changes[plate] = new_locations[plate]
+
+    return location_with_changes, movements
+
+#Build object to save in table 
+def prepare_movement_object(new_location, old_location):
+    movement_object = {
+        "city" : new_location.city,
+        "servicio" : new_location.servicio,
+        "idVehiculo" : new_location.idVehiculo,
+        "matricula" : new_location.matricula,
+        "energia_start" : old_location.energia_start,
+        "energia_end":  new_location.energia_end,
+        "latitud_start" : old_location.latitud_start,
+        "latitud_end" : new_location.latitud_end,
+        "longitud_start" : old_location.longitud_start,
+        "longitud_end" : new_location.longitud_end,
+        "tipo" : new_location.tipo,
+        "categoria" : new_location.categoria,
+        "imagen" : new_location.imagen,
+        "uoid_start" : old_location.uoid_start,
+        "uoid_end" : new_location.uoid_end,
+        "epochTime_start" : old_location.epochTime_start,
+        "epochTime_end" : new_location.epochTime_end,
+        "realTime_start" : old_location.realTime_start,
+        "realTime_end" : new_location.realTime_end,
+        "geo_start" : old_location.geo_start,
+        "geo_end" : new_location.geo_end,
+        "timestamp_start" : old_location.timestamp_start,
+        "timestamp_end" : new_location.timestamp_end,
+        "tipoVehiculo" : new_location.tipoVehiculo,
+        "code" : new_location.code,
+        "autonomyValue_start" : old_location.autonomyValue_start,
+        "autonomyValue_end" : new_location.autonomyValue_end,
+        "autonomyUnit" : new_location.autonomyUnit,
+        "transmission" : new_location.transmission,
+        "color" : new_location.color,
+        "range" : new_location.range,
+        "fuel" : new_location.fuel,
+        "seats" : new_location.seats,
+        "babySeat" : new_location.babySeat,
+        "boosterSeat" : new_location.boosterSeat,
+        "discounted" : new_location.discounted,
+        "operatingSystemName" : new_location.operatingSystemName,
+        "operationSystemFleetId" : new_location.operationSystemFleetId,
+        "operationSystemVehicleDescriptionId" : new_location.operationSystemVehicleDescriptionId
+    }
+    return movement_object

@@ -23,11 +23,11 @@ def firestore_get_old_situation():
   #print('Vehicles in Firestore: ' +  str(len(dict_old_locations)))
   return dict_old_locations
 
-def firestore_write_changes(changes):
+def firestore_write_changes(location_with_changes):
     #Prepare 400 items batches
     list_to_batch = []
     in_list = []
-    for id,item in enumerate(changes):
+    for id,item in enumerate(location_with_changes):
         if(id%400==0):
             list_to_batch.append(in_list.copy())
             in_list = []
@@ -39,8 +39,8 @@ def firestore_write_changes(changes):
         batch = db_firestore.batch()
         for vehicle_item in items:
             #print(list_to_batch[vehicle_item])
-            fst_ref = db_firestore.collection(firestore_actual_collection).document(changes[vehicle_item]['matricula'])
-            batch.set(fst_ref, changes[vehicle_item])
+            fst_ref = db_firestore.collection(firestore_actual_collection).document(location_with_changes[vehicle_item]['matricula'])
+            batch.set(fst_ref, location_with_changes[vehicle_item])
         # Finally commit the batch
         batch.commit()
 
@@ -48,9 +48,9 @@ def firestore_write_changes(changes):
     #Start batch
     batch = db_firestore.batch()
     #Set batch info
-    for vehicle in changes:
+    for vehicle in location_with_changes:
         nyc_ref = db_firestore.collection(firestore_actual_info).document(vehicles_list[vehicle]['matricula'])
-        batch.set(nyc_ref, changes[vehicle])
+        batch.set(nyc_ref, location_with_changes[vehicle])
     #commit the batch
     batch.commit()
     """
