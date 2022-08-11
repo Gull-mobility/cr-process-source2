@@ -55,6 +55,9 @@ def calculate_movements(new_locations,old_locations):
 
 #Build object to save in table 
 def prepare_movement_object(new_location, old_location):
+
+    print(new_location)
+
     movement_object = {
         "city" : new_location.city,
         "servicio" : new_location.servicio,

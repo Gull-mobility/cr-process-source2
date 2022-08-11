@@ -18,9 +18,10 @@ def param(name):
     execution(name)
 
     #Print time
+    #TODO: Change timezone
     date = datetime.now()
     
-    return f"Tadk donde for id, {escape(name)} at {date}!"
+    return f"Task donde for id, {escape(name)} at {date}!"
 
 @app.route("/hello/<name>")
 def hello(name):
