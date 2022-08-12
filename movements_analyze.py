@@ -61,9 +61,11 @@ def prepare_movement_object(new_location, old_location):
     print(new_location)
 
     #Change tipe of timestamp
+    """
     print(new_location['timestamp'])
     old_location_timestamp_end_form = datetime.datetime(new_location['timestamp'].year, new_location['timestamp'].month, new_location['timestamp'].day, new_location['timestamp'].hour, new_location['timestamp'].minute, new_location['timestamp'].second)
     print(old_location_timestamp_end_form)
+    """
 
     movement_object = {
         "city" : new_location['city'],
@@ -89,7 +91,7 @@ def prepare_movement_object(new_location, old_location):
         #TODO: Add timesamp data
         #ES#"timestamp_start" : old_location['timestamp'],
         #"timestamp_end" : new_location['timestamp'],
-        "timestamp_end" : old_location_timestamp_end_form,
+        #"timestamp_end" : old_location_timestamp_end_form,
         "tipoVehiculo" : new_location['tipoVehiculo'],
         "code" : new_location['code'],
         "autonomyValue_start" : old_location['autonomyValue'],
