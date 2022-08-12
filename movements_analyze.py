@@ -80,6 +80,7 @@ def prepare_movement_object(new_location, old_location):
         "realTime_end" : new_location['realTime'],
         "geo_start" : old_location['geo'],
         "geo_end" : new_location['geo'],
+        #TODO: Add timesamp data
         #"timestamp_start" : old_location['timestamp'],
         #"timestamp_end" : new_location['timestamp'],
         "tipoVehiculo" : new_location['tipoVehiculo'],
@@ -100,5 +101,4 @@ def prepare_movement_object(new_location, old_location):
         "operationSystemVehicleDescriptionId" : new_location['operationSystemVehicleDescriptionId']
     }
 
-    for 
     return movement_object
