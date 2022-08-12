@@ -76,8 +76,8 @@ def prepare_movement_object(new_location, old_location):
         "uoid_end" : new_location['uoid'],
         "epochTime_start" : old_location['epochTime'],
         "epochTime_end" : new_location['epochTime'],
-        "realTime_start" : old_location['realTime'],
-        "realTime_end" : new_location['realTime'],
+        #"realTime_start" : old_location['realTime'],
+        #"realTime_end" : new_location['realTime'],
         "geo_start" : old_location['geo'],
         "geo_end" : new_location['geo'],
         #TODO: Add timesamp data
@@ -100,5 +100,7 @@ def prepare_movement_object(new_location, old_location):
         "operationSystemFleetId" : new_location['operationSystemFleetId'],
         "operationSystemVehicleDescriptionId" : new_location['operationSystemVehicleDescriptionId']
     }
+
+    for
 
     return movement_object
