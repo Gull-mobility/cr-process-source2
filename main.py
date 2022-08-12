@@ -10,8 +10,11 @@ from process import execution
 
 app = Flask(__name__)
 
+@app.route("/")
+def hello_world():
+    return "<p>Hello, World!</p>"
 
-@app.route("/<name>")
+@app.route("/process/<name>")
 def param(name):
 
     #Execute process
