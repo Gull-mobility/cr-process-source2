@@ -1,5 +1,6 @@
 #Imports bigquery
 from google.cloud import bigquery
+import datetime
 
 client = bigquery.Client()
 
@@ -28,6 +29,9 @@ def bigquery_positions_by_id(uoid):
         dictRow['epochTime'] = float(dictRow['epochTime'])
         dictRow['autonomyValue'] = float(dictRow['autonomyValue'])
         dictRow['seats'] = float(dictRow['seats'])
+
+        #Change tipe of timestamp
+        dictRow['timestamp'] = datetime.datetime(dictRow['timestamp'].year, dictRow['timestamp'].month, dictRow['timestamp'].day, dictRow['timestamp'].hour, dictRow['timestamp'].minute, dictRow['timestamp'].second, dictRow['timestamp'].tzinfo)
 
         vehicles[dictRow['matricula']] = dictRow
 
