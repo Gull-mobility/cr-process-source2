@@ -80,8 +80,8 @@ def prepare_movement_object(new_location, old_location):
         "realTime_end" : new_location['realTime'],
         "geo_start" : old_location['geo'],
         "geo_end" : new_location['geo'],
-        "timestamp_start" : old_location['timestamp'],
-        "timestamp_end" : new_location['timestamp'],
+        #"timestamp_start" : old_location['timestamp'],
+        #"timestamp_end" : new_location['timestamp'],
         "tipoVehiculo" : new_location['tipoVehiculo'],
         "code" : new_location['code'],
         "autonomyValue_start" : old_location['autonomyValue'],
@@ -99,4 +99,6 @@ def prepare_movement_object(new_location, old_location):
         "operationSystemFleetId" : new_location['operationSystemFleetId'],
         "operationSystemVehicleDescriptionId" : new_location['operationSystemVehicleDescriptionId']
     }
+
+    for 
     return movement_object
