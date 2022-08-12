@@ -101,6 +101,4 @@ def prepare_movement_object(new_location, old_location):
         "operationSystemVehicleDescriptionId" : new_location['operationSystemVehicleDescriptionId']
     }
 
-    for
-
     return movement_object
