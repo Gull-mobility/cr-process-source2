@@ -81,7 +81,7 @@ def prepare_movement_object(new_location, old_location):
         "geo_end" : new_location['geo'],
         #TODO: Add timesamp data
         #ES#"timestamp_start" : old_location['timestamp'],
-        #"timestamp_end" : new_location['timestamp'],
+        "timestamp_end" : new_location['timestamp'],
         "tipoVehiculo" : new_location['tipoVehiculo'],
         "code" : new_location['code'],
         "autonomyValue_start" : old_location['autonomyValue'],
