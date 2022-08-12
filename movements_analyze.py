@@ -59,7 +59,7 @@ def prepare_movement_object(new_location, old_location):
     print(new_location)
 
     movement_object = {
-        "city" : new_location.city,
+        "city" : new_location['city'],
         "servicio" : new_location.servicio,
         "idVehiculo" : new_location.idVehiculo,
         "matricula" : new_location.matricula,
