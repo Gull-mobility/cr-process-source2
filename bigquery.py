@@ -31,7 +31,7 @@ def bigquery_positions_by_id(uoid):
         dictRow['seats'] = float(dictRow['seats'])
 
         #Change tipe of timestamp
-        dictRow['timestamp'] = datetime.datetime(dictRow['timestamp'].year, dictRow['timestamp'].month, dictRow['timestamp'].day, dictRow['timestamp'].hour, dictRow['timestamp'].minute, dictRow['timestamp'].second, dictRow['timestamp'].tzinfo)
+        dictRow['timestamp'] = datetime.datetime(dictRow['timestamp'].year, dictRow['timestamp'].month, dictRow['timestamp'].day, dictRow['timestamp'].hour, dictRow['timestamp'].minute, dictRow['timestamp'].second)
 
         vehicles[dictRow['matricula']] = dictRow
 
