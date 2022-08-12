@@ -10,6 +10,8 @@ def execution(uoid):
 
     #Get new positions
     new_locations = bigquery_positions_by_id(uoid)
+    print('New locations from BigQuery ' + uoid + ' : ' + str(len(new_locations)))
+
     #Calculate movements
     location_with_changes, movements, counter_new, counter_change = calculate_movements(new_locations, old_location)
 

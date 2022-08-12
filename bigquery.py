@@ -21,7 +21,7 @@ def bigquery_positions_by_id(uoid):
     vehicles = {}
     for row in query_job:
         dictRow = dict(row)
-
+        
         #Fix some campos that makes problems in fierstore format
         dictRow['energia'] = float(dictRow['energia'])
         dictRow['latitud'] = float(dictRow['latitud'])
@@ -29,6 +29,8 @@ def bigquery_positions_by_id(uoid):
         dictRow['epochTime'] = float(dictRow['epochTime'])
         dictRow['autonomyValue'] = float(dictRow['autonomyValue'])
         dictRow['seats'] = float(dictRow['seats'])
+
+        vehicles[dictRow['matricula']] = dictRow
 
     return vehicles
 
