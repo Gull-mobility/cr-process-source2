@@ -81,7 +81,6 @@ def prepare_movement_object(new_location, old_location):
         "geo_end" : new_location['geo'],
         "timestamp_start" : old_location['timestamp'].strftime("%Y-%m-%d %H:%M:%S"),
         "timestamp_end" : new_location['timestamp'].strftime("%Y-%m-%d %H:%M:%S"),
-        "timestamp_end" : old_location_timestamp_end_form,
         "tipoVehiculo" : new_location['tipoVehiculo'],
         "code" : new_location['code'],
         "autonomyValue_start" : old_location['autonomyValue'],
