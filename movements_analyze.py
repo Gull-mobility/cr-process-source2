@@ -58,6 +58,10 @@ def calculate_movements(new_locations,old_locations):
 #Build object to save in table 
 def prepare_movement_object(new_location, old_location):
 
+    timestamp_start_format = old_location['timestamp']
+    if type(timestamp_start_format) != str:
+        timestamp_start_format =  old_location['timestamp'].strftime("%Y-%m-%d %H:%M:%S")
+
     movement_object = {
         "city" : new_location['city'],
         "servicio" : new_location['servicio'],
@@ -79,7 +83,7 @@ def prepare_movement_object(new_location, old_location):
         "realTime_end" : new_location['realTime'],
         "geo_start" : old_location['geo'],
         "geo_end" : new_location['geo'],
-        "timestamp_start" : old_location['timestamp'].strftime("%Y-%m-%d %H:%M:%S"),
+        "timestamp_start" : timestamp_start_format,
         "timestamp_end" : new_location['timestamp'].strftime("%Y-%m-%d %H:%M:%S"),
         "tipoVehiculo" : new_location['tipoVehiculo'],
         "code" : new_location['code'],
