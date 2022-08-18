@@ -8,12 +8,12 @@ client = bigquery.Client()
 table_id_movements = "vacio-276411.mainDataset.trips_b"
 
 #Get actual positions bigquery for uoid
-def bigquery_positions_by_id(uoid, date):
+def bigquery_positions_by_id(uoid, date_first, date_end):
 
     print('Query uoid:"' + uoid +'"')
 
     query = ' '.join(("SELECT * FROM `vacio-276411.mainDataset.bulkData_b`"
-                " WHERE DATE(timestamp) = '" + date  + "'",
+                "WHERE DATE(timestamp) BETWEEN '" + date_first  + "' AND '" + date_end  + "'",
                 "AND uoid = '" + uoid +"'"))
 
     query_job = client.query(query)  # Make an API request.
