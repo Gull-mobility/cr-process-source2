@@ -13,15 +13,15 @@ def execution(uoid):
     print('New locations from BigQuery ' + uoid + ' : ' + str(len(new_locations)))
 
     #Calculate movements
-    location_with_changes, movements, counter_new, counter_change = calculate_movements(new_locations, old_location)
+    locations_with_changes, movements, counter_new, counter_change = calculate_movements(new_locations, old_location)
 
     #Locantions can be bigger than movements because a new vehicle is not a movements
     print('New vehicles: ' + str(counter_new) + '. Changes: ' + str(counter_change))
-    print(str(len(location_with_changes)) + ' firestore changes, '  + str(len(movements)) + ' movements')
+    print(str(len(locations_with_changes)) + ' firestore changes, '  + str(len(movements)) + ' movements')
 
     #Save movements in bigquery
     if movements:
         bigquery_save_movements(movements)
 
     #Write in firestore the changes
-    firestore_write_changes(location_with_changes)
+    firestore_write_changes(locations_with_changes)

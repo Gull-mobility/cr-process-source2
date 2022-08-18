@@ -8,13 +8,13 @@ client = bigquery.Client()
 table_id_movements = "vacio-276411.mainDataset.trips_b"
 
 #Get actual positions bigquery for uoid
-def bigquery_positions_by_id(uoid):
+def bigquery_positions_by_id(uoid, date):
 
     print('Query uoid:"' + uoid +'"')
 
     query = ' '.join(("SELECT * FROM `vacio-276411.mainDataset.bulkData_b`"
-                " WHERE uoid = '" + uoid +"'",
-                "ORDER BY realTime DESC"))
+                " WHERE DATE(timestamp) = '" + date  + "'",
+                "AND uoid = '" + uoid +"'"))
 
     query_job = client.query(query)  # Make an API request.
 
@@ -44,3 +44,29 @@ def bigquery_save_movements(movements):
         print("New rows have been added.")
     else:
         print("Encountered errors while inserting rows: {}".format(errors))
+
+
+#This function is only used by bulk class, not in production execution
+def bigquery_bulk_uoid():
+
+
+
+  #Done
+  # "2022-06-01" AND  "2022-08-17"
+  query = """
+      SELECT uoid, timestamp  FROM `vacio-276411.mainDataset.bulkData_b` 
+      WHERE DATE(timestamp) BETWEEN "2022-08-18" AND  "2022-08-18"
+      GROUP BY uoid, timestamp
+      ORDER BY timestamp ASC
+  """
+
+  query_job = client.query(query)  # Make an API request.
+
+
+
+  list_uoids = []
+  for row in query_job:
+      #print("name={}".format(row[0]))
+      list_uoids.append(row)
+
+  return list_uoids

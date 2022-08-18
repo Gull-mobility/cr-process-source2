@@ -1,4 +1,5 @@
 import datetime
+import math
 
 def calculate_movements(new_locations,old_locations):
     in_debug = False
@@ -23,6 +24,7 @@ def calculate_movements(new_locations,old_locations):
             #If this vehicule do not exist not continue
 
             #Si es nueva la anadimos a firestore
+            #This now is not necesary becouse is saved at the end of this function
             location_with_changes[plate] = new_locations[plate]
             #Add one to new counter
             counter_new = counter_new + 1
@@ -41,26 +43,38 @@ def calculate_movements(new_locations,old_locations):
                 print('[check_movements] Son distintas') if in_debug else ''
                 print(new_latitude, old_latitude, new_longitude, old_longitude) if in_debug else ''
 
-                #TODO: Add more conditions like minimum movement or charge
-                #TODO: Add a validation if the charge level increease
+                #Calculate distance
+                distance = calculate_distance(old_latitude, old_longitude, new_latitude, new_longitude)
 
-                #Prepare object of movements and add to list
-                movements.append(prepare_movement_object(new_locations[plate], old_locations[plate]))
-                
-                #Save the change in firestore
-                location_with_changes[plate] = new_locations[plate]
+                if distance > 0.2: #Move more than 200meters
 
-                #Add one to change counter
-                counter_change = counter_change + 1
+                    #If charge_end > charge_start + 20 --> vehicle has recharged
+                    recharge = False
+                    if( new_locations[plate]['energia'] - old_locations[plate]['energia'] < 20):
+                        recharge = True
+
+                    #Prepare object of movements and add to list
+                    movements.append(prepare_movement_object(new_locations[plate], old_locations[plate], round(distance,2), recharge))
+                    
+                    #Save the change in firestore
+                    #location_with_changes[plate] = new_locations[plate]
+
+                    #Add one to change counter
+                    counter_change = counter_change + 1
+
+        #Save the change in firestore
+        #Now we want to save all the change becouse if not save the start of trip is not true
+        location_with_changes[plate] = new_locations[plate]
 
     return location_with_changes, movements, counter_new, counter_change
 
 #Build object to save in table 
-def prepare_movement_object(new_location, old_location):
+def prepare_movement_object(new_location, old_location, distance, recharge):
 
     timestamp_start_format = old_location['timestamp']
     if type(timestamp_start_format) != str:
         timestamp_start_format =  old_location['timestamp'].strftime("%Y-%m-%d %H:%M:%S")
+        
 
     movement_object = {
         "city" : new_location['city'],
@@ -77,6 +91,7 @@ def prepare_movement_object(new_location, old_location):
         "categoria" : new_location['categoria'],
         "imagen" : new_location['imagen'],
         "uoid_start" : old_location['uoid'],
+        "uoid_end" : new_location['uoid'],
         "epochTime_start" : old_location['epochTime'],
         "epochTime_end" : new_location['epochTime'],
         "realTime_start" : old_location['realTime'],
@@ -100,7 +115,22 @@ def prepare_movement_object(new_location, old_location):
         "discounted" : new_location['discounted'],
         "operatingSystemName" : new_location['operatingSystemName'],
         "operationSystemFleetId" : new_location['operationSystemFleetId'],
-        "operationSystemVehicleDescriptionId" : new_location['operationSystemVehicleDescriptionId']
+        "operationSystemVehicleDescriptionId" : new_location['operationSystemVehicleDescriptionId'],
+        "distance" :distance,
+        "recharge" : recharge
     }
 
     return movement_object
+
+def calculate_distance(lat1, lon1, lat2, lon2):
+
+    R = 6371  # radius of the earth in km
+    
+    rad=math.pi/180
+    dlat=lat2-lat1
+    dlon=lon2-lon1
+    RT=6372.795477598
+    a=(math.sin(rad*dlat/2))**2 + math.cos(rad*lat1)*math.cos(rad*lat2)*(math.sin(rad*dlon/2))**2
+    distance=2*RT*math.asin(math.sqrt(a))
+    
+    return distance
